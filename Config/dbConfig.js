@@ -1,6 +1,7 @@
 'use strict';
 
-var local = 'mongodb://localhost/diesel-local';
+// mlab database link
+var local = 'mongodb://lovika:test123@ds143573.mlab.com:43573/ticket_reservation';
 
 var mongodbURI = {
     local: local
