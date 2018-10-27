@@ -23,8 +23,11 @@ var server = new Hapi.Server({
     }
 })
 
+console.log(Config.appConstant.SERVER.APP_NAME);
+
 var connectionOptions = {
     port: process.env.PORT || PORT,
+    host: Config.appConstant.SERVER.HOST,
     routes: {
         cors: true,
         log: true
@@ -35,12 +38,12 @@ server.connection(connectionOptions);
 
 //Connect to MongoDB
 mongoose.connect(MONGO_DB_URI.local, MONGO_CRED, function (err) {
-    server.log("Mongo connected ", err);
+    console.log("Mongo connected ", err);
     if (err) {
-        server.log("DB Error: ", err);
+        console.log("DB Error: ", err);
         process.exit(1);
     } else {
-        server.log('MongoDB Connected at', MONGO_DB_URI);
+        console.log('MongoDB Connected at', MONGO_DB_URI);
     }
 });
 
@@ -62,5 +65,5 @@ server.route(Routes);
 
 //Start Server
 server.start(function () {
-    server.log('info', 'Server running at: ' + server.info.uri);
+    console.log('info', 'Server running at: ' + server.info.uri);
 });
