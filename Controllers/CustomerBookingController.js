@@ -24,9 +24,9 @@ var getObj = function (params, query, callback) {
       Services.CustomerService.get(criteria, projection, options, function (err, data) {
         if (err) {
           cb("Sorry, We are Not able to get the Customer Details! Try Again!");
-        } else if (data && data.length > 0 && data[0]._id) {
+        } else if (data && data.length > 0 && data._id) {
           if (data) {
-            customerId = data[0]._id;
+            customerId = data._id;
             cb();
           }
         } else {}
@@ -75,8 +75,8 @@ var newTickeTBooking = function (payload, callback) {
       Services.CustomerService.get({}, projection, options, function (err, data) {
         if (err) {
           cb(err);
-        } else if (data && data.length > 0 && data[0]._id) {
-          customerId = data[0]._id;
+        } else if (data && data.length > 0 && data._id) {
+          customerId = data._id;
           cb();
         } else {
           cb('Error while retreiving customer details!!');
