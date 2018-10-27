@@ -18,11 +18,12 @@ var getObj = function (params, callbackRoute) {
   }
 
   Services.CustomerService.get(criteria, projection, options, function (err, data) {
+    console.log(data);
     if (err) {
       callbackRoute("Sorry, We are Not able to get the Customer Details! Try Again!");
-    } else if (data && data.length > 0 && data._id) {
+    } else if (data && data.length > 0 && data[0]._id) {
       if (data) {
-        customerData = data;
+        customerData = data[0];
         callbackRoute(null, customerData);
       }
     } else {

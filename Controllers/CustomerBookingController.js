@@ -3,106 +3,62 @@ var Config = require('../Config');
 var async = require('async');
 var moment = require('moment');
 var mongoose = require('mongoose');
+_ = require('underscore');
 
 //  Get User Details
-var getObj = function (params, query, callback) {
-  let customerId;
+var getObj = function (params, callback) {
+  var projection = {};
+  var options = {
+    limit: 1
+  };
   let bookingDetails;
 
   if (params._id) {
-    criteria._id = params._id;
+    let criteria = {
+      '_id': params._id
+    }
+    var projection = {};
+    var options = {};
+
+    Services.CustomerBookingService.get(criteria, projection, options, function (err, data) {
+      if (err) {
+        callback(err);
+      } else if (data && data.length > 0 && data[0]._id) {
+        bookingDetails = data;
+        callback(null, bookingDetails);
+      } else {
+        callback(err);
+      }
+    });
   }
 
-  async.series([
-    function (cb) {
-      let criteria = {};
-      let projection = {};
-      var options = {
-        limit: 1
-      };
-
-      Services.CustomerService.get(criteria, projection, options, function (err, data) {
-        if (err) {
-          cb("Sorry, We are Not able to get the Customer Details! Try Again!");
-        } else if (data && data.length > 0 && data._id) {
-          if (data) {
-            customerId = data._id;
-            cb();
-          }
-        } else {}
-        cb("Customer Doesn't exist!!");
-      });
-    },
-    function (cb) {
-      let criteria = {};
-      let projection = {};
-      var options = {
-        limit: 1
-      };
-
-      Services.CustomerBookingService.get(criteria, projection, options, function (err, data) {
-        if (err) {
-          cb(err);
-        } else if (data && data.length > 0) {
-          bookingDetails = data;
-          cb();
-        } else {
-          cb();
-        }
-      });
-    }
-  ], function (err, success) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, bookingDetails);
-    }
-  })
 }
 
 //  New ticket Request
 
-var newTickeTBooking = function (payload, callback) {
-  let data = payload;
+var newTickeTBooking = function (request, callback) {
+  let data = request.payload;
   let customerId;
   var bookingDetails;
-  async.series([
-    function (cb) {
-      let projection = {};
-      let options = {
-        limit: 1
-      };
-      Services.CustomerService.get({}, projection, options, function (err, data) {
-        if (err) {
-          cb(err);
-        } else if (data && data.length > 0 && data._id) {
-          customerId = data._id;
-          cb();
-        } else {
-          cb('Error while retreiving customer details!!');
-        }
-      });
-    },
-    function (cb) {
-      data.customerId = customerId;
-      Services.CustomerBookingService.create(data, function (err, dataFromDB) {
-        if (err) {
-          console.log(err);
-          cb(err);
-        } else {
-          bookingDetails = dataFromDB._id;
-          cb();
-        }
-      });
-    }
-  ], function (err, response) {
+
+  let projection = {};
+  let options = {
+    limit: 1
+  };
+  let criteria = {
+    '_id': request.params.customer_id,
+  }
+  data._id = mongoose.Types.ObjectId().toString();
+  data.customerId = customerId;
+  Services.CustomerBookingService.create(data, function (err, dataFromDB) {
     if (err) {
       console.log(err);
       callback(err);
     } else {
+      bookingDetails = dataFromDB._id;
       callback(null, bookingDetails);
     }
-  })
+  });
 }
 
 module.exports = {

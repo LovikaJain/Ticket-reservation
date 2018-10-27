@@ -15,7 +15,7 @@ module.exports = [{
     method: 'GET',
     path: '/api/customer/{_id?}',
     handler: function (request, reply) {
-      Controller.CustomerController.get(request, function (err, success) {
+      Controller.CustomerController.get(request.params, function (err, success) {
         console.log(request.params);
         if (err) {
           return reply(err);

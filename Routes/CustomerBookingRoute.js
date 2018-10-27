@@ -6,11 +6,11 @@ appConstant = require('../Config/appConstant');
 
 var payloadValidation = {
     _id: Joi.string().optional(),
-    name: Joi.string().required(),
+    name: Joi.string().optional(),
     email: Joi.string().optional(),
-    phoneNo: Joi.number().required(),
+    phoneNo: Joi.number().optional(),
     showName: Joi.string().required(),
-    Date: Joi.string().required(),
+    Date: Joi.date().optional(),
     seatRow: Joi.string().valid([
         appConstant.seatingStructure.seats.right,
         appConstant.seatingStructure.seats.left,
@@ -30,7 +30,7 @@ module.exports = [{
         method: 'GET',
         path: '/api/customer/{customer_id}/booking/{_id?}',
         handler: function (request, reply) {
-            Controller.CustomerBookingController.get(request, function (err, success) {
+            Controller.CustomerBookingController.get(request.params, function (err, success) {
                 console.log(request.params);
                 if (err) {
                     return reply(err);
@@ -55,7 +55,7 @@ module.exports = [{
         method: 'POST',
         path: '/api/customer/{customer_id}/booking',
         handler: function (request, reply) {
-            Controller.CustomerBookingController.save(request, function (err, success) {
+            Controller.CustomerBookingController.newTicket(request, function (err, success) {
                 console.log(request.params);
                 if (err) {
                     return reply(err);
