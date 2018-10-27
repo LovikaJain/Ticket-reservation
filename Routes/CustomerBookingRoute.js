@@ -30,7 +30,7 @@ module.exports = [{
         method: 'GET',
         path: '/api/customer/{customer_id}/booking/{_id?}',
         handler: function (request, reply) {
-            Controller.CustomerController.get(request, function (err, success) {
+            Controller.CustomerBookingController.get(request, function (err, success) {
                 console.log(request.params);
                 if (err) {
                     return reply(err);
@@ -55,7 +55,7 @@ module.exports = [{
         method: 'POST',
         path: '/api/customer/{customer_id}/booking',
         handler: function (request, reply) {
-            Controller.CustomerController.save(request, function (err, success) {
+            Controller.CustomerBookingController.save(request, function (err, success) {
                 console.log(request.params);
                 if (err) {
                     return reply(err);
@@ -65,8 +65,8 @@ module.exports = [{
             })
         },
         config: {
-            description: 'Add new Customer',
-            tags: ['api', 'customers'],
+            description: 'Add new Customer Booking',
+            tags: ['api', 'customers-booking'],
             validate: {
                 payload: payloadValidation,
                 params: {
