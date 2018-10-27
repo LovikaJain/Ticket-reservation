@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var softDelete = require('mongoose-delete');
 var Schema = mongoose.Schema;
 
 var Booking = new Schema({

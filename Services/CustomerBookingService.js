@@ -20,6 +20,5 @@ var createObj = function(CustomerData, callback) {
 
 module.exports = {
     get: getObj,
-    create: createObj,
-    update: updateObj
+    create: createObj
 }

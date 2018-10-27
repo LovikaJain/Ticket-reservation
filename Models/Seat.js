@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var softDelete = require('mongoose-delete');
 var Config = require('../Config');
 var Schema = mongoose.Schema;
 

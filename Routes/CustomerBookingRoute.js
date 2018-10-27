@@ -2,7 +2,7 @@ var Controller = require('../Controllers'),
     Joi = require('joi'),
     _ = require('lodash'),
     universalFunction = require('../Utils/UniversalFunctions');
-appConstants = require('../Config/appConstant');
+appConstant = require('../Config/appConstant');
 
 var payloadValidation = {
     _id: Joi.string().optional(),
@@ -70,7 +70,7 @@ module.exports = [{
             validate: {
                 payload: payloadValidation,
                 params: {
-                    customer_id: Joi.string().required().required.trim()
+                    customer_id: Joi.string().required().trim()
                 },
                 failAction: universalFunction.failActionFunction
             }

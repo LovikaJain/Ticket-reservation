@@ -7,12 +7,11 @@ var Controllers = require('./Controllers');
 var Services = require('./Services');
 var MONGO_DB_URI = Config.dbConfig.mongodbURI;
 var MONGO_CRED = Config.dbConfig.mongodbCRED.MONGO_CRED_LOCAL;
-
+var PORT = Config.appConstant.SERVER.PORTS.LOCAL;
 console.log("----Envrironment:" + process.env.NODE_ENV + "------");
-
 // Set Env
 if (process.env.NODE_ENV === 'LOCAL') {
-    PORT = Config.APP_CONSTANTS.SERVER.PORTS.LOCAL;
+    PORT = Config.appConstant.SERVER.PORTS.LOCAL;
     MONGO_DB_URI = Config.dbConfig.mongodbURI.local;
     MONGO_CRED = Config.dbConfig.mongodbCRED.MONGO_CRED_LOCAL;
 }
@@ -35,7 +34,7 @@ var connectionOptions = {
 server.connection(connectionOptions);
 
 //Connect to MongoDB
-mongoose.connect(MONGO_DB_URI, MONGO_CRED, function (err) {
+mongoose.connect(MONGO_DB_URI.local, MONGO_CRED, function (err) {
     server.log("Mongo connected ", err);
     if (err) {
         server.log("DB Error: ", err);

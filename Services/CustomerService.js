@@ -18,16 +18,7 @@ var createObj = function(CustomerData, callback) {
     })
 }
 
-// Update Customer Details 
-var updateObj = function (criteria, dataToSet, options, callback) {
-    options.lean = true;
-    options.new = true;
-    Models.Customer.findOneAndUpdate(criteria, dataToSet, options, callback);
-};
-
-
 module.exports = {
     get: getObj,
     create: createObj,
-    update: updateObj
 }
